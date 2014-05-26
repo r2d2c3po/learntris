@@ -1,0 +1,6 @@
+#!/usr/bin/env python
+
+#Joey Y. Ni
+import sys
+
+sys.exit('q')
