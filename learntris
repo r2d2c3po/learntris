@@ -1,6 +1,45 @@
-#!/usr/bin/env python
+#!/usr/bin/env python2.7-32
 
 #Joey Y. Ni
 import sys
+import pygame
 
-sys.exit('q')
+numClear=0
+score=0
+matrix=[['.' for x in xrange(10)] for e in xrange(22)]
+#global game board initialized with .
+
+def main():
+    pygame.init()
+    while True:
+       for event in pygame.event.get():
+           if event.type == pygame.KEYDOWN:   
+     		if event.key==pygame.K_p:
+			printMatrix() #initialize game
+    		if event.key==pygame.K_q:
+			sys.exit() 
+		if event.key==pygame.K_g:
+	                reload()
+		if event.key==pygame.K_c: #clear matrix
+			matrix=[]
+	                matrix=[['.' for x in xrange(10)] for e in xrange(22)]
+		        printMatrix()
+                if event.key==pygame.K_s: #display score
+			print(score)
+		if event.key==pygame.K_n: #display num lines cleared
+			print(numClear)
+                if event.key==pygame.K_SPACE:
+			#execute one step of the simulation
+			                         	
+
+def reload(): #reload matrix with changes as described by the input in stdin
+    for line in sys.stdin:
+    	new=line.split()
+    matrix=[]
+    printMatrix()
+    
+def printMatrix():
+    for e in matrix: print " ".join(str(x) for x in e)  
+      
+if __name__== "__main__":
+   main()
