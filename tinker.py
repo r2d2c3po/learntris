@@ -1,0 +1,55 @@
+#!/usr/bin/env python
+import sys
+import _tkinter 
+import Tkinter as tk
+
+#CURRENT STEP: 'g' command: set the entire matrix using input lines from stdin CHECK TESTPLAN.ORG
+
+numClear =0
+score=0
+matrix=[['.' for x in xrange(10)] for e in xrange(22)] #global gameboard 
+
+def main():
+	root=tk.Tk()
+	text=tk.Text(root)
+	label=tk.Label(root, text="Tetris") #label widget
+	canvas=tk.Canvas(root, width=400, height=600, bg='white')
+	 #clear canvas	
+	label.pack(side=tk.TOP) #geometry manager to put label on top of root window
+	text.pack()
+	canvas.pack() #canvas is packed later so that it shows below the label
+	root.bind("q", quit) #binds q as an argument for quit
+	root.bind("p", setup)
+	root.bind("c", clear)
+	root.bind("s", score)
+	root.bind("n", numClear)
+	root.bind("<space>", step)
+	sys.stdout = StdoutRedirect(text)
+	root.mainloop() #calls to show root window
+	
+def step(event): printMatrix()
+
+def quit(event): sys.exit(0)
+	
+def setup(event): printMatrix()
+
+def clear(event):
+	matrix=[['.' for x in xrange(10)] for e in xrange(22)]
+	printMatrix()
+
+def score(event): print score #display score
+
+def numClear(event): print numClear #display num lines cleared
+
+def printMatrix():
+	for e in matrix: print " ".join(str(x) for x in e) 
+
+class StdoutRedirect(object): #Redirects stdout from terminal to GUI
+	def __init__(self, widget): self.widget = widget
+
+	def write(self, s): 
+		self.widget.insert(tk.END, s)
+		self.widget.see(tk.END)
+	
+if __name__ == "__main__":
+	main()

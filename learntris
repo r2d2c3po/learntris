@@ -1,45 +1,37 @@
-#!/usr/bin/env python2.7-32
-
-#Joey Y. Ni
+#!/usr/bin/env python
 import sys
-import pygame
+import _tkinter 
+import Tkinter as tk
 
-numClear=0
+numClear =0
 score=0
-matrix=[['.' for x in xrange(10)] for e in xrange(22)]
-#global game board initialized with .
+matrix=[['.' for x in xrange(10)] for e in xrange(22)] #global gameboard 
 
 def main():
-    pygame.init()
-    while True:
-       for event in pygame.event.get():
-           if event.type == pygame.KEYDOWN:   
-     		if event.key==pygame.K_p:
-			printMatrix() #initialize game
-    		if event.key==pygame.K_q:
-			sys.exit() 
-		if event.key==pygame.K_g:
-	                reload()
-		if event.key==pygame.K_c: #clear matrix
-			matrix=[]
-	                matrix=[['.' for x in xrange(10)] for e in xrange(22)]
-		        printMatrix()
-                if event.key==pygame.K_s: #display score
-			print(score)
-		if event.key==pygame.K_n: #display num lines cleared
-			print(numClear)
-                if event.key==pygame.K_SPACE:
-			#execute one step of the simulation
-			                         	
+	root=tk.Tk()
+	label=tk.Label(root, text="Tetris") #label widget
+	input=tk.Entry(root) #input widget
+	label.pack(side=tk.TOP) #geometry manager to put label on top of root window
+	input.pack() #input is packed later so that it shows below the label
+        root.bind("q", quit)
+	root.bind("p", setup)
+	root.bind("c", clear)
+	root.mainloop() #calls to show root window
 
-def reload(): #reload matrix with changes as described by the input in stdin
-    for line in sys.stdin:
-    	new=line.split()
-    matrix=[]
-    printMatrix()
-    
+def quit(event): sys.exit(0)
+	
+def setup(event): printMatrix()
+
+def clear(event):
+	matrix=[['.' for x in xrange(10)] for e in xrange(22)]
+	printMatrix()
+
+def score(): print score #display score
+
+def numClear(): print numClear #display num lines cleared
+
 def printMatrix():
-    for e in matrix: print " ".join(str(x) for x in e)  
-      
-if __name__== "__main__":
-   main()
+	for e in matrix: print " ".join(str(x) for x in e) 
+
+if __name__ == "__main__":
+	main()
